@@ -36,6 +36,7 @@ class HaulerView @JvmOverloads constructor(
     private var isDragEnabled = true
     private var dragUpEnabled = false
     private var fadeSystemBars = true
+    private var keepSystemBarTransparent = false
 
     init {
         getContext().withStyledAttributes(set = attrs, attrs = R.styleable.HaulerView) {
@@ -54,6 +55,7 @@ class HaulerView @JvmOverloads constructor(
             dragUpEnabled = getBoolean(R.styleable.HaulerView_dragUpEnabled, dragUpEnabled)
             dragElasticity = getFloat(R.styleable.HaulerView_dragElasticity, dragElasticity)
             fadeSystemBars = getBoolean(R.styleable.HaulerView_fadeSystemBars, fadeSystemBars)
+            keepSystemBarTransparent = getBoolean(R.styleable.HaulerView_keepSystemBarTransparent, keepSystemBarTransparent)
         }
 
         setFadeSystemBars(fadeSystemBars)
@@ -168,7 +170,7 @@ class HaulerView @JvmOverloads constructor(
 
         if (fadeSystemBars) {
             (context as? Activity)?.also {
-                systemBarsFader = SystemBarsFader(it)
+                systemBarsFader = SystemBarsFader(it, keepSystemBarTransparent)
             }
         } else {
             systemBarsFader = null
